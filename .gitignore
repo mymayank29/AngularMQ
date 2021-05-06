@@ -1,0 +1,21 @@
+.env
+src/.procConfig
+api/src/.procConfig
+src/server/sslcert
+api/src/server/sslcert
+node_modules
+postConversion
+training-source
+training-source-resized
+.DS_Store
+runLog
+csv-output
+Original Files
+full-PDFs
+new-file-test
+files
+error-files
+test-source
+api/node_modules
+ui/src/environments/environment.ts
+.vscode

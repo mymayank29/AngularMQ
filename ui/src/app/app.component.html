@@ -1,0 +1,7 @@
+<div>
+    <div *ngIf="loggedIn">
+        <app-header></app-header>
+        <!-- <upload></upload> -->
+    </div>
+    <router-outlet *ngIf="!isIframe"></router-outlet>
+</div>

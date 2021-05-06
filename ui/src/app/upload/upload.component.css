@@ -1,0 +1,72 @@
+.uploadfilecontainer {
+    background-image: url("../../assets/icons/addfilebig.png");
+    background-repeat: no-repeat;
+    background-position: center 60%;
+    text-align: center;
+    font-family: 'PT Sans', sans-serif;
+    height: 200px;
+    width: 100%;
+    border: 2px dashed #1C8ADB;
+    border-radius: 8px;
+}
+p{
+    font-family: 'sans-serif';
+}
+.attachment-li{
+    font-size: 12px;
+    margin-left: 3%;
+}
+.attachments{
+    font-size: large;
+    font-family: 'PT Sans', sans-serif;
+    color: #0067B2;
+}
+.upload-container{
+    margin-top: 3%;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.remove{
+    color: red;
+}
+
+.submit-button{
+    margin-top: 10px;
+    float: right;
+    background-color: #0067B2;
+    color: #ffffff;
+}
+
+.uploadfilecontainer:hover {
+    cursor: pointer;
+    background-color: #9ecbec !important;
+    opacity: 0.8;
+}
+
+.files-list {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background: #ffffff;
+    border: 1px dashed;
+    border-radius: 12px;
+    padding: 5px;
+    color: #1c8adb;
+}
+
+.files-list .delete-file {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.files-list .delete-file img {
+    width: 30px;
+}
+
+.report-btn {
+    float: left;
+    /* margin-top: 4%; */
+    margin-left: 20%;
+}

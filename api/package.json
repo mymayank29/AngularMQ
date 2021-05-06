@@ -1,0 +1,43 @@
+{
+  "name": "jsm-form-extract",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "",
+  "scripts": {
+    "start": "node src/server",
+    "start-server": "node src/server",
+    "test": "mocha test",
+    "lint": "npm run eslint",
+    "eslint": "eslint src/. test/. --config .eslintrc.json",
+    "dev": "nodemon src/server",
+    "build": "npm i"
+  },
+  "dependencies": {
+    "@azure/storage-blob": "^12.1.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pdfjs-dist": "^2.2.228",
+    "pg": "^7.18.2",
+    "rxjs": "^6.5.3",
+    "sequelize": "^5.21.5",
+    "xlsx": "^0.15.6"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-node": "^4.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "mocha": "^7.0.1",
+    "prettier": "^1.18.2",
+    "supertest": "^4.0.2"
+  }
+}

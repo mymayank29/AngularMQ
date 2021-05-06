@@ -1,0 +1,38 @@
+<div>
+  <div class = "select-drop-down">
+  <ng-multiselect-dropdown
+  [placeholder]="'Select Tags'"
+  *ngIf = "loaded"
+  [settings]="dropdownSettings"
+  [data]="dropdownList"
+  [(ngModel)]="selectedItems"
+  (onSelect)="onItemSelect($event)"
+  (onSelectAll)="onSelectAll($event)"
+  (onDeSelect)="onItemDeSelect($event)"
+>
+</ng-multiselect-dropdown>
+</div>
+<div class = "grid-container">
+  <div class = "grid-component">
+    <ag-grid-angular 
+      #agGrid
+      *ngIf = "loaded"
+      class="ag-theme-alpine"
+      (gridReady)="onGridReady($event)"
+      [modules]="modules"
+      [deltaColumnMode]="true"
+      [context] = "context"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [rowData]="rowData"
+      [excelStyles]="excelStyles"
+      
+    >
+    </ag-grid-angular>
+  </div>
+</div>
+<div class="report-btn" *ngIf = "loaded">
+  <i style = "float: left; margin-left: 8%;" class="material-icons md-36" routerLink="/">arrow_back</i>
+  <i class="material-icons md-36" (click)= "saveExcelFile()">get_app</i>
+</div>
+</div>

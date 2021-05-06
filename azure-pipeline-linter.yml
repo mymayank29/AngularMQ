@@ -1,0 +1,53 @@
+pr:
+  - master
+  - dev
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Specify Node.js 10.x'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.6'
+  displayName: 'Specify Python 3.6'
+
+- bash: |
+    file_list=()
+
+    while read f; do
+      if file "$f" | grep -q 'CRLF'; then
+        echo "$f"
+        file_list+=("$f")
+      fi
+    done < <(find .)
+
+    if [ ${#file_list[@]} -eq 0 ]; then
+      echo "all line endings are correct"
+      exit 0
+    else
+      echo "CRLF detected"
+      exit 1
+    fi
+  workingDirectory: $(Build.SourcesDirectory)
+  displayName: 'LINTER - Line Endings'
+
+# - script: |
+#     npm install
+#     npm run lint
+#   workingDirectory: $(Build.SourcesDirectory)/ui
+#   displayName: 'LINTER - UI'
+
+- script: |
+    npm install
+    ./node_modules/.bin/eslint . --ext .js
+  workingDirectory: $(Build.SourcesDirectory)/api
+  displayName: 'LINTER - API'

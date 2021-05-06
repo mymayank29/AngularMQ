@@ -1,0 +1,13 @@
+.header-card{
+    background-color: #0067B2;
+    height: 50px;
+    padding: 6px;
+    top: 0px;
+}
+.logo{
+    height: 100%;
+}
+.logout-button{
+    float: right;
+    vertical-align: middle;
+}

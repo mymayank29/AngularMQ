@@ -1,0 +1,27 @@
+<div class="upload-container">
+    <span class="attachments" fxLayout="row">
+        Attachments
+    </span>
+    <div fxLayout="row">
+        <div fxLayout="column" class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop
+            (onFileDropped)="uploadFile($event)">
+            <span *ngIf="files.length === 0">
+                There are no files attached. Click Box or Drag and Drop files, press 'Submit' to upload.
+            </span>
+            <input hidden type="file" #fileInput (change)="uploadFile($event.target.files)">
+        </div>
+        <div fxLayout="column">
+            <div fxLayout="row" class="attachment-li" *ngFor="let file of files;let i= index">
+                <p> {{ file }} </p>
+                <button mat-icon-button (click)="deleteAttachment(i)">
+                    <mat-icon class="remove">remove</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <button mat-raised-button fxLayoutAlign="center center" class="submit-button" (click)="submit()">Submit</button>
+
+</div>
+<div class="report-btn">
+    <button mat-raised-button fxLayoutAlign="center center" class="submit-button " routerLink="/getReport">Generate Report</button>
+</div>

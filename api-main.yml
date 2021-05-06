@@ -1,0 +1,43 @@
+---
+- hosts: localhost
+  connection: local
+
+  vars:
+    appservicebase: "{{ cvx_mnemonic | lower }}-api-{{ cvx_environment_name }}"
+    appservicefqdn: "{{ cvx_mnemonic | lower }}-api-{{ '' if cvx_environment_name == 'prod' else cvx_environment_name }}.azure.chevron.com"
+    azurestorageaccountname: "{{ cvx_az.resourceGroup | replace('-', '') | replace(cvx_manifest.application.name, cvx_mnemonic) | lower }}{{ '' if cvx_environment_name == 'prod' else cvx_environment_name[0] }}cvx"
+    node_env: "{{ cvx_environment_name }}"
+    postgresdb: "{{ postgresdb }}"
+    DB_SYNC: "{{ DB_SYNC }}"
+
+
+  roles:
+    - name: ansible-role-azure-asp
+      azure_asp_name: "{{ appservicebase }}-cvx"
+      azure_app_service_auth_enabled: False
+      azure_asp_is_linux: true
+      azure_asp_region: "southcentralus"
+      azure_asp_sku: "P1V2"
+    - name: ansible-role-azure-app-service-linux
+      azure_app_service_linux_runtime_stack: "node|10.14.2"
+      azure_app_service_linux_name: "{{ appservicebase }}-cvx"
+      azure_app_service_linux_region: "southcentralus"
+      azure_app_service_linux_fqdn: "{{ appservicefqdn }}"
+      azure_app_service_linux_auth_enabled: False
+      azure_app_service_linux_domain_hint_enabled: false 
+      azure_app_service_linux_customappsettings: 
+      - name: NODE_ENV
+        value: "production"
+      - name: POSTGRESDB
+        value: "{{ postgresdb }}"
+      - name: DB_SYNC
+        value: "{{ DB_SYNC }}"
+
+    - name: ansible-role-azure-app-service-bindcertificate
+      cvx_fqdn: "{{ appservicefqdn }}"
+      azure_app_service_location: "southcentralus"
+      azure_app_service_bindcertificate_region: "southcentralus"
+      azure_keyvault_cert_secretname: "{{ appservicebase }}"
+      azure_app_service_name: "{{ appservicebase }}-cvx"
+      azure_app_service_asp_name: "{{ appservicebase }}-cvx"
+

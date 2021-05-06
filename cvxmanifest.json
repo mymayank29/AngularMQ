@@ -1,0 +1,58 @@
+{
+  "application": {
+    "name": "GOM Material Quality", 
+    "project": "ETC-TC-DSTD-GOM-MQP", 
+    "repository": "https://dev.azure.com/chevron/_git/ETC-TC-DSTD-GOM-MQP", 
+    "serviceId": "1500001639", 
+    "shortName": "gommqp"
+  }, 
+  "baseUrl": "gommqp", 
+  "companyCode": "0064", 
+  "contentVersion": "1.0.0.0", 
+  "costElement": "UCITCGOMGA", 
+  "environments": {
+    "dev": {
+      "azure": {
+        "appId": "723ee06d-058a-4a66-aab1-4b0810b3d1c6", 
+        "defaultRegion": "southcentralus", 
+        "resourceGroup": "gommqp-t323-20190910", 
+        "subscription": "cf64bb78-f43c-42fa-a926-659f1f58aa03", 
+        "vaultName": "gommqp-t323-cvx"
+      }, 
+      "dnsDomain": "azure.chevron.com"
+    }, 
+    "prod": {
+      "azure": {
+        "appId": "56d33264-a114-48ba-9790-a2c8c40f7780", 
+        "defaultRegion": "southcentralus", 
+        "resourceGroup": "gommqp-p323-20190910", 
+        "subscription": "805c99c0-232e-4199-9af9-28365ac1d322", 
+        "vaultName": "gommqp-p323-cvx"
+      }, 
+      "dnsDomain": "azure.chevron.com"
+    }, 
+    "stage": {
+      "azure": {
+        "appId": "56d33264-a114-48ba-9790-a2c8c40f7780", 
+        "defaultRegion": "southcentralus", 
+        "resourceGroup": "gommqp-p323-20190910", 
+        "subscription": "805c99c0-232e-4199-9af9-28365ac1d322", 
+        "vaultName": "gommqp-p323-cvx"
+      }, 
+      "dnsDomain": "azure.chevron.com"
+    }, 
+    "test": {
+      "azure": {
+        "appId": "723ee06d-058a-4a66-aab1-4b0810b3d1c6", 
+        "defaultRegion": "southcentralus", 
+        "resourceGroup": "gommqp-t323-20190910", 
+        "subscription": "cf64bb78-f43c-42fa-a926-659f1f58aa03", 
+        "vaultName": "gommqp-t323-cvx"
+      }, 
+      "dnsDomain": "azure.chevron.com"
+    }
+  }, 
+  "ownerEmail": [
+    "brendans@chevron.com"
+  ]
+}

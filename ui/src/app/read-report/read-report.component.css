@@ -1,0 +1,29 @@
+.ag-theme-alpine {
+    width: 83%; 
+    height: 350px; 
+    margin: 0 auto;
+    margin-top: 30px;
+}
+.submit-button{
+    margin-top: 10px;
+    float: right;
+    background-color: #0067B2;
+    color: #ffffff;
+    margin-right: 8%;
+}
+.material-icons {
+    margin-top: 10px !important;
+    float: right;
+    font-size: 55px !important;
+    color: midnightblue;
+    margin-right: 8% !important;
+    cursor: pointer;
+}
+.select-drop-down {
+    width: 61%;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+:host ::ng-deep .dropdown-list ul {
+    overflow-x: hidden !important;
+}

@@ -1,0 +1,163 @@
+resources:
+  repositories:
+  - repository: pf
+    type: git
+    name: CVX-DevOps/PipelineFramework
+    ref: refs/tags/3.6.5
+
+trigger: 
+  branches:
+    include:
+    - develop
+
+stages:
+  - stage: PreCheck
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+    - job: CheckLineEndings
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.14.2'
+        displayName: 'Download and Set Node.js 10.14.2'
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+        displayName: 'Specify Python 3.6'
+      - bash: |
+          file_list=()
+          while read f; do
+            if file "$f" | grep -q 'CRLF'; then
+              echo "$f"
+              file_list+=("$f")
+            fi
+          done < <(find .)
+          if [ ${#file_list[@]} -eq 0 ]; then
+            echo "all line endings are correct"
+            exit 0
+          else
+            echo "CRLF detected"
+            exit 1
+          fi
+        workingDirectory: $(Build.SourcesDirectory)
+        displayName: 'LINTER - Line Endings'
+
+    - job: UI_LinterandUnitTests
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.14.2'
+        displayName: 'Download and Set Node.js 10.14.2'
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+        displayName: 'Specify Python 3.6'  
+      # - script: |
+      #     npm install
+      #     npm run lint
+      #   workingDirectory: $(Build.SourcesDirectory)/ui
+      #   displayName: 'LINTER - UI'
+      # - script: |
+      #     npm install
+      #     npm run test
+      #   workingDirectory: $(Build.SourcesDirectory)/ui
+      #   displayName: 'Unit Tests - UI' 
+
+    - job: API_LinterandUnitTests
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.14.2'
+        displayName: 'Download and Set Node.js 10.14.2'
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+        displayName: 'Specify Python 3.6' 
+      - script: |
+          npm install
+          npm run lint
+        workingDirectory: $(Build.SourcesDirectory)/api
+        displayName: 'LINTER - API' 
+      - script: |
+          npm install
+          npm run test
+        workingDirectory: $(Build.SourcesDirectory)/api
+        displayName: 'Unit Tests - API'
+
+
+            
+  - template: pipeline.yml@pf
+    parameters:
+      project:
+      - name: mqp_api
+        path: /api
+        type: node
+        toolset: node
+        version: '10.14.2'
+        # buildTool:
+        # - name: grunt
+        build_active: true
+        publish_active: true
+        deploy_active: true
+      #  output: /producer-api
+        build_pool:
+          name: 'Default'
+          demands:
+          # - agent.name -equals vsts-plin900_agent001
+          - agent.os -equals Linux
+        sonarqube:
+          name: 'MQP-API'
+          scan: false
+          sqExclusions: '**/node_modules/**,**/e2e/**, **/*.scss'
+          additionalProperties: ''
+        fortify:
+          fortifyApp: ''
+          fortifyVersion: ''
+          sast: false
+          dast: false
+        playbook: api-main.yml
+        extra_ansible_vars: |  
+          postgresdb: "$(postgresdb)"
+          DB_SYNC: "$(DB_SYNC)"
+
+
+      - name: mqp_ui
+        type: node
+        path: /ui
+        toolset: node
+        version: '10.x'
+        output: dist
+
+        buildTools:
+        - name: angular
+        build_active: true
+        publish_active: true
+        deploy_active: true
+        # output: /dist
+        build_pool:
+          name: 'Default'
+          demands:
+          # - agent.name -equals vsts-plin900_agent001
+          - agent.os -equals Linux
+        sonarqube:
+          name: 'MQP-UI'
+          scan: false
+          sqExclusions: '**/node_modules/**,**/e2e/**, **/*.scss'
+          additionalProperties: ''
+        fortify:
+          fortifyApp: ''
+          fortifyVersion: ''
+          sast: false
+          dast: false
+        playbook: ui-main.yml
+
+
+      # - name: JMeterTest
+      #   type: test
+      #   build_active: false
+      #   tests:
+      #   - name: MyTest
+      #     type: jmeter
+      #     jmeter_testFile: 'sci-test.jmx'
+      #     jmeter_version: 'jmeter-5.2.1'  
